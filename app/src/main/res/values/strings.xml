@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Evest Assistant</string>
+    <string name="assistant_name">Евестевень</string>
+    <string name="wake_word_default">евестевень</string>
+
+    <string name="notif_channel_name">Евестевень слушает</string>
+    <string name="notif_channel_desc">Фоновая служба ожидания командного слова</string>
+    <string name="notif_title">Евестевень активен</string>
+    <string name="notif_text">Жду командное слово «евестевень»</string>
+
+    <string name="perm_rationale_mic">Микрофон нужен, чтобы слышать команду «евестевень» и распознавать вашу речь.</string>
+    <string name="perm_rationale_notif">Уведомление показывает, что ассистент работает в фоне (это требование Android).</string>
+    <string name="perm_rationale_overlay">Разрешение «поверх других приложений» нужно, чтобы показать анимированный глаз-индикатор поверх экрана при активации.</string>
+    <string name="perm_rationale_call">Разрешение на звонки нужно, чтобы совершать вызов сразу, без открытия наборщика.</string>
+    <string name="perm_rationale_contacts">Доступ к контактам нужен, чтобы находить номер по имени («позвони маме»).</string>
+</resources>
