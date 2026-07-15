@@ -24,7 +24,7 @@ android {
     signingConfigs {
         create("release") {
             val storeFileEnv = System.getenv("KEYSTORE_PATH")
-            if (storeFileEnv != null) {
+            if (storeFileEnv != null && file(storeFileEnv).exists()) {
                 storeFile = file(storeFileEnv)
                 storePassword = System.getenv("KEYSTORE_PASSWORD")
                 keyAlias = System.getenv("KEY_ALIAS")
@@ -41,9 +41,10 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            // Uses debug signing if release keystore secrets are not provided,
-            // so the workflow always produces an installable APK even without a keystore.
-            signingConfig = if (System.getenv("KEYSTORE_PATH") != null) {
+            // Uses debug signing if the release keystore file isn't actually present,
+            // so the workflow always produces an installable APK even without a keystore secret.
+            val storeFileEnv = System.getenv("KEYSTORE_PATH")
+            signingConfig = if (storeFileEnv != null && file(storeFileEnv).exists()) {
                 signingConfigs.getByName("release")
             } else {
                 signingConfigs.getByName("debug")
