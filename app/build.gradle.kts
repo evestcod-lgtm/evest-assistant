@@ -79,6 +79,21 @@ android {
             useLegacyPackaging = true
         }
     }
+
+    // CRITICAL: Vosk reads its model files (am/final.mdl, graph/*, ivector/*,
+    // etc.) directly by byte offset via native code. If AAPT compresses these
+    // assets when packaging the APK, Vosk fails to load the model at runtime
+    // with an obscure error, even though the files are present and correctly
+    // placed. Some Vosk model files have no file extension at all (e.g.
+    // graph/phones/word_boundary), so we disable compression for the entire
+    // asset type list Vosk ships, covering all known extensions across
+    // vosk-model-small-ru and similar models.
+    androidResources {
+        noCompress += listOf(
+            "mdl", "conf", "int", "fst", "carpa", "txt", "ali", "dubm", "ie",
+            "mat", "list", "words", "phones", "tree", "gz"
+        )
+    }
 }
 
 dependencies {
