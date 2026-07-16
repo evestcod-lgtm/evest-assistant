@@ -65,6 +65,16 @@ jobs:
             echo "Vosk model files found — wake-word activation and command recognition will be functional."
           fi
 
+      - name: Generate Vosk 'uuid' marker file (required by StorageService.unpack, not included in model downloads)
+        run: |
+          if [ -d "app/src/main/assets/vosk-model" ] && [ ! -f "app/src/main/assets/vosk-model/uuid" ]; then
+            uuidgen > app/src/main/assets/vosk-model/uuid 2>/dev/null || cat /proc/sys/kernel/random/uuid > app/src/main/assets/vosk-model/uuid
+            echo "Generated missing app/src/main/assets/vosk-model/uuid marker file:"
+            cat app/src/main/assets/vosk-model/uuid
+          else
+            echo "uuid marker file already present or model folder missing, skipping."
+          fi
+
       - name: Decode release keystore (optional)
         if: ${{ env.KEYSTORE_BASE64 != '' }}
         run: |
